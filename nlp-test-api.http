@@ -1,0 +1,6 @@
+@nlp_test_api_HostAddress = http://localhost:5206
+
+GET {{nlp_test_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
