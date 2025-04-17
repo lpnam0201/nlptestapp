@@ -3,10 +3,16 @@ az webapp up --resource-group nlp-test --name nlpwebapp20250415 --plan nlptestpl
 !!!Config managed identity for webapp + Config grant "Storage Blob Data Contributor" to webapp
 
 URL to generate token + upload blob
-/WeatherForecast/GenerateSasUsingUserDelegation
+nlpwebapp20250415.azurewebsites.net/WeatherForecast/GenerateSasUsingUserDelegation
 
 List blobs in container:
 <SAS URI>&restype=container&comp=list
 
 Download blob:
 <SAS URI>/<blob-name>?...<SAS TOKEN>
+
+
+KEY VAULT
+!!! Grant "Key Vault Secrets User" for app service's managed identity
+
+nlpwebapp20250415.azurewebsites.net/WeatherForecast/GetKeyVaultSecrets
