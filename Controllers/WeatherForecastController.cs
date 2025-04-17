@@ -19,10 +19,12 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
@@ -60,7 +62,6 @@ public class WeatherForecastController : ControllerBase
         sasBuilder.SetPermissions(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.List);
         var uriBuilder = new BlobUriBuilder(blobContainerClient.Uri)
         {
-            // Specify the user delegation key
             Sas = sasBuilder.ToSasQueryParameters(
                 userDelegationKey,
                 blobContainerClient.GetParentBlobServiceClient().AccountName)
@@ -74,5 +75,12 @@ public class WeatherForecastController : ControllerBase
         var data = Encoding.ASCII.GetBytes("test-data");
         await blobContainerClientWithSas.UploadBlobAsync(blobName, new BinaryData(data));
         yield return "Uploaded blob!";
+    }
+
+    [HttpGet("GetKeyVaultSecrets")]
+    public async IAsyncEnumerable<string> GetKeyVaultSecrets()
+    {
+        yield return _configuration.GetValue<string>("Secret1");
+        yield return _configuration.GetValue<string>("Secret2");
     }
 }
