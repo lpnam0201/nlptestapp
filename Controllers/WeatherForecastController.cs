@@ -57,7 +57,7 @@ public class WeatherForecastController : ControllerBase
             StartsOn = DateTimeOffset.UtcNow,
             ExpiresOn = DateTimeOffset.UtcNow.AddDays(1)
         };
-        sasBuilder.SetPermissions(BlobSasPermissions.Read | BlobSasPermissions.Write);
+        sasBuilder.SetPermissions(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.List);
         var uriBuilder = new BlobUriBuilder(blobContainerClient.Uri)
         {
             // Specify the user delegation key
